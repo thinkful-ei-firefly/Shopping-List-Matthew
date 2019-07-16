@@ -17,17 +17,20 @@ const generateItemElement = item => {
           <button class="shopping-item-delete js-item-delete">
               <span class="button-label">delete</span>
           </button>
+          <button class="shopping-item-edit js-item-edit">
+              <span class="button-label">edit</span>
+          </button>
         </div>
       </li>`;
 };
 
 //ADD ITEM
 const addItemToShoppingList = itemName =>
-  STORE.push({ id: cuid(), name: itemName, checked: false });
+  STORE.items.push({ id: cuid(), name: itemName, checked: false });
 
 //TOGGLE CHECK
 const toggleCheckedForListItem = itemId => {
-  const item = STORE.find(item => item.id === itemId);
+  const item = STORE.items.find(item => item.id === itemId);
   item.checked = !item.checked;
 };
 
@@ -38,6 +41,20 @@ const getItemIdFromElement = item => {
 };
 //DELETE ITEM
 const deleteItem = id => {
-  const index = STORE.findIndex(item => item.id === id);
-  STORE.splice(index, 1);
+  const index = STORE.items.findIndex(item => item.id === id);
+  STORE.items.splice(index, 1);
 };
+
+//Toggle Hide Filter
+function toggleHideFilter() {
+  STORE.hideCompleted = !STORE.hideCompleted;
+}
+
+//EDIT
+
+const editItem = (newName, id) => {
+  const index = STORE.items.findIndex(item => item.id === id);
+  STORE.items[index].name = newName;
+};
+
+//Change
